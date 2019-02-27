@@ -29,21 +29,21 @@ struct Equations {
 
 struct Node {
     dvec3 pos;
-    Equations eqs;    // node dof to global matrix dof mapping, if eq set to -1 corresponding dof is constrained
+    Equations eqs; /* node dof to global matrix dof mapping, if eq set to -1 corresponding dof is constrained */
 };
 
+/*
+USAGE:
+1. add *all* nodes to array first using node_add(), then
+2. index equations using node_index_node_eqs(), and then
+3. add loads using node_add_load
+because node_add_load() uses equation indices to fill
+force vector correctly, and node_index_node_eqs() can
+index node equations only after all nodes are created.
+*/
 
-struct Nodes {
-    int cap, count;
-    Node *nodes;
-
-    Nodes(int _cap);
-    ~Nodes();
-
-    void clear();
-    void add_node(dvec3 pos, unsigned dofs);
-    void add_load(int node_index, dvec3 force, double *F);
-    int index_node_eqs();
-};
+int node_add(Node *nodes, int nodes_count, dvec3 pos, unsigned dofs);
+int node_index_node_eqs(Node *nodes, int nodes_count);
+void node_add_load(Node *nodes, int node_index, double *forces_vector, dvec3 force);
 
 #endif
