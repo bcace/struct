@@ -1,6 +1,7 @@
 #include "node.h"
 #include "beam.h"
 #include "arena.h"
+#include "sparse.h"
 #include <stdio.h>
 
 
@@ -21,7 +22,8 @@ void beam_test(Arena &arena) {
     BeamProperties beam_props;
     beam_props.set_rectangular(0.02, 0.1, 0.1, 0.1);
 
-    double *K = arena.alloc<double>(eqs_count * eqs_count);
+    fprintf(stderr, "!!! %d\n", eqs_count);
+    SparseMatrix K(eqs_count, arena.alloc<double>(eqs_count * eqs_count));
 
     beam_add_to_global(K, nodes[0], nodes[1], dvec3(0, 0, 1), beam_props);
     beam_add_to_global(K, nodes[0], nodes[2], dvec3(0, 0, 1), beam_props);
