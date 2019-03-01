@@ -28,4 +28,7 @@ void mat_square_transform(double (&a)[S][S], double (&b)[S][S]) {
     }
 }
 
+
+
+
 #endif

@@ -9,6 +9,7 @@ struct SparseMatrix {
     SparseMatrix(int _eqs, double *_data);
 
     void update_element(int i, int j, double v);
+    void solve(double *interface);
 };
 
 #endif
