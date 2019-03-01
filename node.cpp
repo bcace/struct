@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 
-int node_add(Node *nodes, int nodes_count, dvec3 pos, unsigned dofs) {
-    Node &n = nodes[nodes_count];
+void node_add(Node *nodes, int &nodes_count, dvec3 pos, unsigned dofs) {
+    Node &n = nodes[nodes_count++];
     n.pos = pos;
     n.eqs.x =  ((dofs & DOF_X)  == 0) ? CONSTR_DOF_EQ : 0;
     n.eqs.y =  ((dofs & DOF_Y)  == 0) ? CONSTR_DOF_EQ : 0;
@@ -12,7 +12,6 @@ int node_add(Node *nodes, int nodes_count, dvec3 pos, unsigned dofs) {
     n.eqs.rx = ((dofs & DOF_RX) == 0) ? CONSTR_DOF_EQ : 0;
     n.eqs.ry = ((dofs & DOF_RY) == 0) ? CONSTR_DOF_EQ : 0;
     n.eqs.rz = ((dofs & DOF_RZ) == 0) ? CONSTR_DOF_EQ : 0;
-    return nodes_count++;
 }
 
 int node_index_node_eqs(Node *nodes, int nodes_count) {

@@ -8,11 +8,11 @@
 void beam_test(Arena &arena) {
     arena.clear();
 
-    Node *nodes = arena.alloc<Node>(2);
+    Node *nodes = arena.alloc<Node>(3);
     int nodes_count = 0;
-    nodes_count = node_add(nodes, nodes_count, dvec3(0, 0, 0), 0);
-    nodes_count = node_add(nodes, nodes_count, dvec3(1, 0, 0), DOF_X | DOF_Y);
-    nodes_count = node_add(nodes, nodes_count, dvec3(0, 1, 0), DOF_Y);
+    node_add(nodes, nodes_count, dvec3(0, 0, 0), 0);
+    node_add(nodes, nodes_count, dvec3(1, 0, 0), DOF_X | DOF_Y);
+    node_add(nodes, nodes_count, dvec3(0, 1, 0), DOF_Y);
 
     int eqs_count = node_index_node_eqs(nodes, nodes_count);
 
@@ -22,7 +22,6 @@ void beam_test(Arena &arena) {
     BeamProperties beam_props;
     beam_props.set_rectangular(0.02, 0.1, 0.1, 0.1);
 
-    fprintf(stderr, "!!! %d\n", eqs_count);
     SparseMatrix K(eqs_count, arena.alloc<double>(eqs_count * eqs_count));
 
     beam_add_to_global(K, nodes[0], nodes[1], dvec3(0, 0, 1), beam_props);

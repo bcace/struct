@@ -9,7 +9,6 @@ SparseMatrix::SparseMatrix(int _eqs, double *_data) : eqs(_eqs), data(_data) {
 }
 
 void SparseMatrix::update_element(int i, int j, double v) {
-    fprintf(stderr, "%d %d %d\n", i, j, eqs);
     assert(i < eqs && j < eqs);
     data[i * eqs + j] += v;
 }

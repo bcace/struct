@@ -42,7 +42,7 @@ force vector correctly, and node_index_node_eqs() can
 index node equations only after all nodes are created.
 */
 
-int node_add(Node *nodes, int nodes_count, dvec3 pos, unsigned dofs);
+void node_add(Node *nodes, int &nodes_count, dvec3 pos, unsigned dofs);
 int node_index_node_eqs(Node *nodes, int nodes_count);
 void node_add_load(Node *nodes, int node_index, double *forces_vector, dvec3 force);
 
