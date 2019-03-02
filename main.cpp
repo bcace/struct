@@ -2,8 +2,22 @@
 #include "beam.h"
 #include "arena.h"
 #include "sparse.h"
+#include <math.h>
 #include <stdio.h>
+#include <assert.h>
 
+
+double _error(double a, double b) {
+    return fabs(a - b) / fabs(a);
+}
+
+void _assert_double_eq(double a, double b, double max_error=0.00001) {
+    double error = _error(a, b);
+    if (error > max_error) {
+        fprintf(stderr, "error: %g\n", error);
+        assert(false);
+    }
+}
 
 void beam_test(Arena &arena) {
     arena.clear();
@@ -28,9 +42,10 @@ void beam_test(Arena &arena) {
     beam_add_to_global(K, nodes[0], nodes[2], dvec3(0, 0, 1), beam_props);
     beam_add_to_global(K, nodes[1], nodes[2], dvec3(0, 0, 1), beam_props);
 
-    // solve(K);
-
+    K.solve(interface);
     // K.print();
+
+    _assert_double_eq(interface[0], -1.42857e-07);
 
     printf("beam_test done.\n");
 }
