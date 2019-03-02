@@ -78,9 +78,13 @@ void beam_add_to_global(SparseMatrix &K, Node &n1, Node &n2, dvec3 up, BeamPrope
 
     // TODO: check why z component is up * 0.5, this matrix should be simply [U, V, W]. Also, who ensures that up is normalized?
     /* up vector */
-    t[2][0] = up.x * 0.5;
-    t[2][1] = up.y * 0.5;
-    t[2][2] = up.z * 0.5;
+    // t[2][0] = up.x * 0.5;
+    // t[2][1] = up.y * 0.5;
+    // t[2][2] = up.z * 0.5;
+
+    t[2][0] = up.x;
+    t[2][1] = up.y;
+    t[2][2] = up.z;
 
     /* cross product between the first two */
     t[1][0] = t[2][1] * t[0][2] - t[2][2] * t[0][1];

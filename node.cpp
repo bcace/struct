@@ -34,12 +34,22 @@ int node_index_node_eqs(Node *nodes, int nodes_count) {
     return eq_count;
 }
 
-void node_add_load(Node *nodes, int node_index, double *forces_vector, dvec3 force) {
+void node_add_force(Node *nodes, int node_index, double *loads, dvec3 force) {
     Node &n = nodes[node_index];
     if (n.eqs.x != CONSTR_DOF_EQ)
-        forces_vector[n.eqs.x] = force.x;
+        loads[n.eqs.x] = force.x;
     if (n.eqs.y != CONSTR_DOF_EQ)
-        forces_vector[n.eqs.y] = force.y;
+        loads[n.eqs.y] = force.y;
     if (n.eqs.z != CONSTR_DOF_EQ)
-        forces_vector[n.eqs.z] = force.z;
+        loads[n.eqs.z] = force.z;
+}
+
+void node_add_moment(Node *nodes, int node_index, double *loads, dvec3 moment) {
+    Node &n = nodes[node_index];
+    if (n.eqs.rx != CONSTR_DOF_EQ)
+        loads[n.eqs.rx] = moment.x;
+    if (n.eqs.ry != CONSTR_DOF_EQ)
+        loads[n.eqs.ry] = moment.y;
+    if (n.eqs.rz != CONSTR_DOF_EQ)
+        loads[n.eqs.rz] = moment.z;
 }
