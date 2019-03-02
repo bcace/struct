@@ -1,5 +1,6 @@
 #include "node.h"
 #include <math.h>
+#include <string.h>
 #include <stdlib.h>
 
 
@@ -32,6 +33,10 @@ int node_index_node_eqs(Node *nodes, int nodes_count) {
             n.eqs.rz = eq_count++;
     }
     return eq_count;
+}
+
+void node_clear_loads(double *loads, int eq_count) {
+    memset(loads, 0, sizeof(double) * eq_count);
 }
 
 void node_add_force(Node *nodes, int node_index, double *loads, dvec3 force) {

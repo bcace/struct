@@ -37,6 +37,7 @@ void beam_test(Arena &arena) {
     int eqs_count = node_index_node_eqs(nodes, nodes_count);
 
     double *interface = arena.alloc<double>(eqs_count);
+    node_clear_loads(interface, eqs_count);
     node_add_force(nodes, 0, interface, dvec3(25, 0, 25));
     node_add_moment(nodes, 1, interface, dvec3(0, 100, 0));
 
@@ -48,11 +49,13 @@ void beam_test(Arena &arena) {
     beam_add_to_global(K, nodes[0], nodes[1], dvec3(0, 0, -1), beam_props);
 
     K.solve(interface);
-    // K.print();
 
-    _print_interface(interface, eqs_count);
-
-    /* ux= 1.667 × 10−5, uz= 0.01467 at node A, ϕy= 5.2 × 10−3 at node B. */
+    _assert_double_eq(interface[0], 1.66667e-05);
+    _assert_double_eq(interface[1], 0.0);
+    _assert_double_eq(interface[2], 0.0146667);
+    _assert_double_eq(interface[3], 0.0);
+    _assert_double_eq(interface[4], 0.0052);
+    _assert_double_eq(interface[5], 0.0);
 
     printf("beam_test done.\n");
 }

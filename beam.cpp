@@ -8,11 +8,13 @@
 
 void beam_add_to_global(SparseMatrix &K, Node &n1, Node &n2, dvec3 up, BeamProperties &props) {
     dvec3 V21 = n2.pos - n1.pos;
+
     double _2a = V21.length();
     double a = _2a * 0.5;
-    double _2a2 = _2a * _2a;
-    double _2a3 = _2a2 * _2a;
+    double _2a2 = 2.0 * a * a;
+    double _2a3 = _2a2 * a;
     double AE_2a = props.AE / _2a;
+
     double EIy2 = props.EIy2;
     double EIy3 = props.EIy3;
     double EIz2 = props.EIz2;
