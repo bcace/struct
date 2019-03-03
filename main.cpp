@@ -1,5 +1,6 @@
 #include "node.h"
 #include "beam.h"
+#include "mitc4.h"
 #include "arena.h"
 #include "sparse.h"
 #include <math.h>
@@ -7,13 +8,9 @@
 #include <assert.h>
 
 
-double _error(double a, double b) {
-    return fabs(a - b) / fabs(a);
-}
-
-void _assert_double_eq(double a, double b, double max_error=0.00001) {
-    double error = _error(a, b);
-    if (error > max_error) {
+void _assert_double_eq(double a, double b) {
+    double error = fabs(a - b) / fabs(a);
+    if (error > 0.00001) {
         fprintf(stderr, "error: %g\n", error);
         assert(false);
     }
@@ -60,11 +57,34 @@ void beam_test(Arena &arena) {
     printf("beam_test done.\n");
 }
 
+void mitc4_test(Arena &arena) {
+    arena.clear();
+
+    Node *nodes = arena.alloc<Node>(50);
+    int nodes_count = 0;
+    node_add(nodes, nodes_count, dvec3(0, 0, 0), DOF_X | DOF_Y | DOF_Z);
+    node_add(nodes, nodes_count, dvec3(5, 0, 0), DOF_RX | DOF_RY | DOF_RZ);
+    node_add(nodes, nodes_count, dvec3(5, 5, 0), DOF_X | DOF_Y | DOF_Z);
+    node_add(nodes, nodes_count, dvec3(0, 5, 0), DOF_RX | DOF_RY | DOF_RZ);
+
+    int eqs_count = node_index_node_eqs(nodes, nodes_count);
+
+    double *interface = arena.alloc<double>(eqs_count);
+    node_clear_loads(interface, eqs_count);
+
+    SparseMatrix K(eqs_count, arena.alloc<double>(eqs_count * eqs_count));
+
+    mitc4_add_to_global(K, nodes[0], nodes[1], nodes[2], nodes[3]);
+
+    printf("mitc4_test done.\n");
+}
+
 
 int main() {
     Arena arena(500000);
 
     beam_test(arena);
+    mitc4_test(arena);
 
     return 0;
 }
