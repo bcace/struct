@@ -248,7 +248,7 @@ void mitc4_add_to_global(SparseMatrix &K, Node &n1, Node &n2, Node &n3, Node &n4
 
     /* TODO: this is fishy... */
 
-    double Ktt = props.C[2][2];
+    double Ktt = 1.0; //props.C[2][2];
 
     /* basis vectors
 

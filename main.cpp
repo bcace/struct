@@ -84,7 +84,7 @@ void mitc4_test(Arena &arena) {
 
 
 int main() {
-    Arena arena(500000);
+    Arena arena(10000000);
 
     beam_test(arena);
     mitc4_test(arena);
