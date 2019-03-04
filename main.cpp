@@ -3,6 +3,7 @@
 #include "mitc4.h"
 #include "arena.h"
 #include "sparse.h"
+#include "test.h"
 #include <math.h>
 #include <stdio.h>
 #include <assert.h>
@@ -74,7 +75,9 @@ void mitc4_test(Arena &arena) {
 
     SparseMatrix K(eqs_count, arena.alloc<double>(eqs_count * eqs_count));
 
-    mitc4_add_to_global(K, nodes[0], nodes[1], nodes[2], nodes[3]);
+    Mitc4Properties props(0.1, 0.1, 0.1);
+
+    mitc4_add_to_global(K, nodes[0], nodes[1], nodes[2], nodes[3], props);
 
     printf("mitc4_test done.\n");
 }
@@ -85,6 +88,7 @@ int main() {
 
     beam_test(arena);
     mitc4_test(arena);
+    test_pinched_cylinder(arena);
 
     return 0;
 }

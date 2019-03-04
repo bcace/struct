@@ -1,4 +1,5 @@
 #include "sparse.h"
+#include "node.h"
 #include <string.h>
 #include <assert.h>
 #include <stdio.h>
